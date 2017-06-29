@@ -14,7 +14,8 @@ def download_image(articles):
 		images = reg_imgur_file.findall(res.text)
 		if len(images):
 			counts += 1
-			store_dir = os.path.join('download' + article.text)
+			title = article.text.replace('\\','').replace('/','')
+			store_dir = os.path.join('download',title)
 			if not os.path.isdir(store_dir):
 				os.mkdir(store_dir)
 		for img in set(images):
@@ -47,7 +48,7 @@ def crawler():
 reg_imgur_file = re.compile('http[s]?://i.imgur.com/\w+\.(?:jpg|png|gif)')
 root_url = 'https://www.ptt.cc'
 if len(sys.argv) > 1:
-	max_download = sys.argv[1]
+	max_download = int(sys.argv[1])
 else:
 	max_download = 10
 crawler()
